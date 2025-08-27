@@ -21,7 +21,7 @@ The following analytical queries were implemented in **three paradigms** (Relati
 ## Implementations
 ### SQL Implementation
 The relational model captures users, training sessions, skills (pre/post), and evaluations.
-Key Queries:
+**Key Queries:**
 -Skill improvement by demographic profile.
 -Engagement level vs. employment outcomes.
 -Literacy gains by age group.
