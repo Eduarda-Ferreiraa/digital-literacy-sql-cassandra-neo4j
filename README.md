@@ -22,26 +22,26 @@ The following analytical queries were implemented in **three paradigms** (Relati
 ### SQL Implementation
 The relational model captures users, training sessions, skills (pre/post), and evaluations.
 Key Queries:
-Skill improvement by demographic profile.
-Engagement level vs. employment outcomes.
-Literacy gains by age group.
-Modules completed vs. education level.
-Income vs. adaptability.
+-Skill improvement by demographic profile.
+-Engagement level vs. employment outcomes.
+-Literacy gains by age group.
+-Modules completed vs. education level.
+-Income vs. adaptability.
 
 ### Cassandra Implementation
 Since Cassandra does not support complex joins, the dataset was pre-processed in Python (pandas) to generate aggregated CSVs. 
 These CSVs were then imported into Cassandra, where queries were run on simplified tables.
 **Calculated new metrics:**
-avg_skill_improvement (difference between pre and post training scores).
-Literacy gain per age group.
-Engagement and employment impact summaries.
+-avg_skill_improvement (difference between pre and post training scores).
+-Literacy gain per age group.
+-Engagement and employment impact summaries.
 
 **Cassandra Tables**
-user_skill_improvement → demographic profile with highest skill improvement.
-engagement_summary → training engagement vs employment impact.
-age_literacy_grouped → literacy gain by age group.
-education_sessions_summary → sessions completed by education level.
-income_adaptability_summary → adaptability score by household income.
+-user_skill_improvement → demographic profile with highest skill improvement.
+-engagement_summary → training engagement vs employment impact.
+-age_literacy_grouped → literacy gain by age group.
+-education_sessions_summary → sessions completed by education level.
+-income_adaptability_summary → adaptability score by household income.
 
 **Validation in Python**
 Additional analysis and plots were created to check the results:
