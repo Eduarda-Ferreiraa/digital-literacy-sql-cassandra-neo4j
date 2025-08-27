@@ -29,24 +29,18 @@ The relational model captures users, training sessions, skills (pre/post), and e
 -Income vs. adaptability.
 
 ### Cassandra Implementation
-Since Cassandra does not support complex joins, the dataset was pre-processed in Python (pandas) to generate aggregated CSVs. 
-These CSVs were then imported into Cassandra, where queries were run on simplified tables.
+Since Cassandra does not support complex joins, the dataset was pre-processed in Python (pandas) to generate aggregated CSVs.
+
 **Calculated new metrics:**
--avg_skill_improvement (difference between pre and post training scores).
--Literacy gain per age group.
--Engagement and employment impact summaries.
+-avg_skill_improvement (difference between pre and post training scores)
+-Literacy gain per age group
+-Engagement and employment impact summaries
 
 **Cassandra Tables**
--user_skill_improvement → demographic profile with highest skill improvement.
--engagement_summary → training engagement vs employment impact.
--age_literacy_grouped → literacy gain by age group.
--education_sessions_summary → sessions completed by education level.
--income_adaptability_summary → adaptability score by household income.
-
-**Validation in Python**
-Additional analysis and plots were created to check the results:
-Top 5 users with highest improvement.
-Mean improvement by gender, education level, and location type.
-Bar chart of average literacy gain per age group
+-user_skill_improvement → demographic profile with highest skill improvement
+-engagement_summary → training engagement vs employment impact
+-age_literacy_grouped → literacy gain by age group
+-education_sessions_summary → sessions completed by education level
+-income_adaptability_summary → adaptability score by household income
 
 ### Neo4j Implementation 
