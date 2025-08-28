@@ -44,3 +44,22 @@ Since Cassandra does not support complex joins, the dataset was pre-processed in
 -income_adaptability_summary → adaptability score by household income
 
 ### Neo4j Implementation 
+For the graph database approach, the dataset was modeled in Neo4j. 
+
+**Data Model**
+Nodes:
+-User (demographic attributes, age group)
+-PreTrainingSkill → connected to User with [:OF_USER]
+-PostTrainingSkill → connected to User with [:OF_USER]
+-Training → connected to User with [:DONE_BY]
+-Evaluation → connected to User with [:OF_USER]
+
+**Relationships:**
+(PreTrainingSkill)-[:OF_USER]->(User)
+(PostTrainingSkill)-[:OF_USER]->(User)
+(Training)-[:DONE_BY]->(User)
+(Evaluation)-[:OF_USER]->(User)
+
+**Insights**
+Neo4j allowed a graph view of literacy improvement, making it easier to see relationships between user profiles and outcomes.
+The queries returned consistent results with SQL/Cassandra, but with more flexibility for exploratory queries.
