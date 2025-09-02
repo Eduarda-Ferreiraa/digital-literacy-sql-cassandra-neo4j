@@ -1,65 +1,73 @@
 # digital-literacy-sql-cassandra-neo4j
-Analysis of digital literacy training in rural communities using **SQL**, **Cassandra**, and **Neo4j**.   Project developed for the *Complementos de Bases de Dados* course (Universidade).
+
+**Analysis of digital literacy training in rural communities using SQL, Cassandra, and Neo4j**  
+Project developed for the **Complementos de Bases de Dados** course (Universidade).
+
 ## Context
+
 Digital literacy is a key driver for social and economic inclusion.  
-This project analyzes a dataset of participants in **digital literacy training programs**, focusing on:  
+This project analyzes a dataset of participants in digital literacy training programs, focusing on:
 
 - **Demographics** (age, gender, education, income, location type, employment status)  
 - **Skills before and after training** (computer knowledge, internet usage, mobile literacy)  
 - **Training engagement** (modules completed, time per module, quizzes, sessions)  
-- **Evaluation** (feedback, adaptability, employment impact, overall literacy score, engagement)
+- **Evaluation** (feedback, adaptability, employment impact, overall literacy score)
 
 ## Research Questions
-The following analytical queries were implemented in **three paradigms** (Relational, NoSQL, Graph):  
 
-1. Which demographic profiles showed the **highest skill improvement** after training?
-2. What is the relationship between **engagement level** and **employment impact**?
+The following analytical queries were implemented in **three paradigms**: Relational (SQL), NoSQL (Cassandra), and Graph (Neo4j):
+
+1. Which demographic profiles showed the **highest skill improvement** after training?  
+2. What is the relationship between **engagement level and employment impact**?  
 3. How does **literacy gain vary by age group**?  
-4. Which **education levels are associated to a higher number of completed sessions**?  
-5. How does **household income affect adaptability**?
+4. Which **education levels** are associated to a higher number of completed sessions?  
+5. How does **household income affect adaptability**?  
 
 ## Implementations
-### SQL Implementation
-The relational model captures users, training sessions, skills (pre/post), and evaluations.
-**Key Queries:**
--Skill improvement by demographic profile.
--Engagement level vs. employment outcomes.
--Literacy gains by age group.
--Modules completed vs. education level.
--Income vs. adaptability.
 
-### Cassandra Implementation
-Since Cassandra does not support complex joins, the dataset was pre-processed in Python (pandas) to generate aggregated CSVs.
+### SQL (MySQL)
 
-**Calculated new metrics:**
--avg_skill_improvement (difference between pre and post training scores)
--Literacy gain per age group
--Engagement and employment impact summaries
+- **Relational schema**: `User`, `Training`, `Pre_Training_Skills`, `Post_Training_Skills`, `Evaluation`  
+ 
+File: [`sql_code.sql`](./sql_code.sql)
 
-**Cassandra Tables**
--user_skill_improvement → demographic profile with highest skill improvement
--engagement_summary → training engagement vs employment impact
--age_literacy_grouped → literacy gain by age group
--education_sessions_summary → sessions completed by education level
--income_adaptability_summary → adaptability score by household income
+### Cassandra (NoSQL)
 
-### Neo4j Implementation 
-For the graph database approach, the dataset was modeled in Neo4j. 
+Since Cassandra does not support complex joins, the dataset was **pre-processed in Python (pandas)** to generate aggregated CSVs.
 
-**Data Model**
-Nodes:
--User (demographic attributes, age group)
--PreTrainingSkill → connected to User with [:OF_USER]
--PostTrainingSkill → connected to User with [:OF_USER]
--Training → connected to User with [:DONE_BY]
--Evaluation → connected to User with [:OF_USER]
+- **New metrics calculated**:
+  - `avg_skill_improvement` → difference between pre and post training scores  
+  - `literacy_gain` → improvement by age group  
+  - Engagement & employment summaries  
 
-**Relationships:**
-(PreTrainingSkill)-[:OF_USER]->(User)
-(PostTrainingSkill)-[:OF_USER]->(User)
-(Training)-[:DONE_BY]->(User)
-(Evaluation)-[:OF_USER]->(User)
+- **Tables created**:
+  - `user_skill_improvement` → skill improvement per demographic profile  
+  - `engagement_summary` → training engagement vs employment impact  
+  - `age_literacy_grouped` → literacy gain by age group  
+  - `education_sessions_summary` → sessions by education level  
+  - `income_adaptability_summary` → adaptability by income  
 
-**Insights**
-Neo4j allowed a graph view of literacy improvement, making it easier to see relationships between user profiles and outcomes.
-The queries returned consistent results with SQL/Cassandra, but with more flexibility for exploratory queries.
+Files:  
+- [`cassandra_code.sql`](./cassandra_code.sql) → Cassandra schema & queries  
+- [`cassandra_new_metrics.py`](./cassandra_new_metrics.py) → pre-processing script  
+- [`results_cassandra.sql`](./results_cassandra.sql) → query outputs
+  
+### Neo4j (Graph Database)
+
+The dataset was modeled as a **graph** in Neo4j:
+
+- **Nodes**:
+  - `User` (demographics, age group)  
+  - `PreTrainingSkill` → [:OF_USER] → User  
+  - `PostTrainingSkill` → [:OF_USER] → User  
+  - `Training` → [:DONE_BY] → User  
+  - `Evaluation` → [:OF_USER] → User  
+
+## Key Findings
+
+- **SQL**: Best suited for structured analysis with joins and groupings. Clear to implement but requires more complex queries.  
+- **Cassandra**: Fast retrieval once data is **pre-aggregated**. However, requires pre-processing outside Cassandra (Python used here).  
+- **Neo4j**: Provided flexibility for **exploratory queries** and visualization of relationships (users, skills, training). Results aligned with SQL/Cassandra but offered richer graph insights.  
+
+
+
